@@ -18,6 +18,9 @@
 # 5) Successfully execute the sample code provided below.
 
 
+from typing import Any
+
+
 class Book():
     def __init__(self, title, author, pages, cover, antique, price):
         self.title = title
@@ -28,11 +31,34 @@ class Book():
         self.price = price
 
     # TODO: Implement the str and repr functions
-
+    def __str__(self) -> str:
+        return f"{self.title} by {self.author}:{self.pages}, {self.cover}, {self.price}"
+    
+    def __repr__(self) -> str:
+        return f"<Book:{self.title}:{self.author}:{self.pages}:{self.cover}:{self.antique}:{self.price}>"
+    
     # TODO: Implement the adjustedprice attribute
-
+    def __getattr__(self, name):
+        if name == "adjustedprice":
+            val = self.price
+            if self.antique == True:
+                val += 10.0
+            if self.cover == "Paperback":
+                val -= 2.0
+            return val
+        
     # TODO: Implement comparisons <, >, <=, >=
-
+    def __ge__(self, other):
+        return self.pages >= other.pages
+    
+    def __gt__(self, other):
+        return self.pages > other.pages
+    
+    def __le__(self, other):
+        return self.pages <= other.pages
+    
+    def __lt__(self, other):
+        return self.pages < other.pages
 
 # TODO: Implement the Hard/Paperback Enum
 
